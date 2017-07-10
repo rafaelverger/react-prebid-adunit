@@ -1,0 +1,32 @@
+{
+  "name": "react-prebid",
+  "version": "0.0.1",
+  "description": "React Component to wrap AdUnit elements using a Prebid.js container",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src/index.jsx | babili > lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "rafaelverger",
+  "license": "ISC",
+  "dependencies": {
+    "nautilusjs": "0.0.6"
+  },
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "prop-types": ">=15.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-loader": "7.1.1",
+    "babel-plugin-add-module-exports": "0.2.1",
+    "babel-plugin-transform-function-bind": "6.22.0",
+    "babel-preset-env": "1.5.2",
+    "babel-preset-react": "6.24.1",
+    "babili": "0.1.4"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 9"
+  ]
+}
