@@ -1,0 +1,19 @@
+{
+  "name": "react-prebid-demo",
+  "version": "1.0.0",
+  "description": "Demo Application to use DFPPrebidAd element",
+  "main": "demo/server.js",
+  "scripts": {
+    "start": "BABEL_ENV=demo ../node_modules/.bin/babel-node server.js"
+  },
+  "author": "rafaelverger",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "4.15.3",
+    "nunjucks": "3.0.1",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "webpack": "3.0.0",
+    "webpack-dev-middleware": "1.11.0",
+    "webpack-hot-middleware": "2.18.1"
+  }
+}
