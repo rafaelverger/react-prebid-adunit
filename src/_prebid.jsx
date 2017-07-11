@@ -70,7 +70,6 @@ export default class PrebidContainer extends Component {
   }
 
   sendAdserverRequest() {
-    console.log('sendAdserverRequest', this.props.domID);
     if (window.pbjs.adserverRequestSent) return;
     clearTimeout(window.pbjsAdServerTimeout);
     window.pbjs.adserverRequestSent = true;
@@ -85,12 +84,10 @@ export default class PrebidContainer extends Component {
     // window.pbjs__slots is used to assert that slots are loaded one time only
     window.pbjs__slots.push(domID);
     const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
-    console.log(`[data-prebid-adspot=${this.adServerType()}]`, window.pbjs__slots, allSpotsOnPage);
     const isTheLastSpot = allSpotsOnPage.length == window.pbjs__slots.length;
 
     // prebid addUnit
     pbjs.que.push(() => {
-      console.log('pbjs.addAdUnits', { code: domID, sizes: dimensions, bids });
       pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
     });
 

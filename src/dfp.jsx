@@ -26,10 +26,8 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
   adServerInit(window) {
     if (!window.googletag) {
-      console.log('mocking dfp', this.state);
       window.googletag = { __slots: [], cmd: [], };
       window.googletag.cmd.push(() => {
-        console.log('disableInitialLoad')
         googletag.pubads().disableInitialLoad();
       });
     }
@@ -45,9 +43,7 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
   adServerRequest(window) {
     window.googletag.cmd.push(() => {
-      console.log('set target');
       window.pbjs.setTargetingForGPTAsync();
-      console.log('refresh pubads');
       window.googletag.pubads().refresh();
     });
   }
@@ -59,7 +55,6 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
     // googletag.cmd is an array of commands that will be execute in inserted order after DFP loads
     googletag.cmd.push(() => {
-      console.log('googletag.defineSlot', adunitPath, dimensions, domID);
       /*
        * Here the ad slot will be requested and then the response will be
        * analysed by `this.slotRendered`.
@@ -79,10 +74,8 @@ export default class DFPPrebidContainer extends PrebidContainer {
       // #googletag.Service_addEventListener
       pubadsService.addEventListener('slotRenderEnded', this.slotRendered);
       if (isTheLastSpot) {
-        console.log('enableSingleRequest // enableServices');
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
-        console.log('pbjs.requestBids');
         lastSpotCallback();
       }
     });
@@ -90,7 +83,6 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
   slotRendered(event) {
     const { flexible, domID } = this.props;
-    console.log(flexible, domID, event.slot.getSlotId().getDomId(), event.isEmpty);
     if (event.slot.getSlotId().getDomId() !== domID) return;
 
     this.props.afterAdLoaded(!event.isEmpty, event.size);
