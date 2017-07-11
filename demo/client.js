@@ -1,4 +1,4 @@
-import DFPAdContainer from '../src';
+import { DFPPrebidContainer } from '../src';
 
 ReactDOM.render(
   React.createElement('div', {

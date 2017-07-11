@@ -4,7 +4,7 @@
   "description": "React Component to wrap AdUnit elements using a Prebid.js container",
   "main": "lib/index.js",
   "scripts": {
-    "build": "babel src/index.jsx | babili > lib/index.js",
+    "build": "babel src --out-dir lib && babili lib -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rafaelverger",
