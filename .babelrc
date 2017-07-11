@@ -9,7 +9,8 @@
   ],
   "plugins": [
     "add-module-exports",
-    "transform-function-bind"
+    "transform-function-bind",
+    "transform-object-rest-spread"
   ],
   "env": {
     "demo": {
