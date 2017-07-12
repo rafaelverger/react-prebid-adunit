@@ -1,6 +1,6 @@
 {
-  "name": "react-prebid-demo",
-  "version": "1.1.0",
+  "name": "react-prebid-adunit-demo",
+  "version": "1.2.0",
   "description": "Demo Application to use DFPPrebidAd element",
   "main": "demo/server.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "rafaelverger",
   "license": "ISC",
   "devDependencies": {
+    "babel-loader": "7.1.1",
     "express": "4.15.3",
     "nunjucks": "3.0.1",
     "react-hot-loader": "^3.0.0-beta.7",
