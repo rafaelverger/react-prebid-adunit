@@ -1,1 +1,5 @@
+.babelrc
+.npmignore
 demo/
+src/
+webpack/
