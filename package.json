@@ -1,6 +1,6 @@
 {
   "name": "react-prebid-adunit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React Component to wrap AdUnit elements using a Prebid.js container",
   "main": "lib/index.js",
   "scripts": {
@@ -10,8 +10,7 @@
   "author": "rafaelverger",
   "license": "ISC",
   "dependencies": {
-    "nautilusjs": "0.0.6",
-    "react-prebid-adunit": "0.0.2"
+    "nautilusjs": "0.0.6"
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
