@@ -9,9 +9,7 @@ const propTypes = {
   domID: PropTypes.string.isRequired,
   bids: PropTypes.arrayOf(PropTypes.shape({
     bidder: PropTypes.string.isRequired,
-    params: PropTypes.shape({
-      placementId: PropTypes.string.isRequired,
-    }),
+    params: PropTypes.object.isRequired,
   })),
   dimensions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   className: PropTypes.string,
