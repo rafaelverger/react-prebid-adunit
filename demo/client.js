@@ -4,22 +4,37 @@ ReactDOM.render(
   React.createElement('div', {
     children: [
       React.createElement(DFPPrebidContainer, {
-        domID: 'div-gpt-ad-1460505748561-0',
-        slot: 'header-bid-tag-0',
+        domID: 'Bloco_Diarios_View_Docside_elm0',
+        slot: 'Bloco_Diarios_View_Docside',
         dimensions: [[300, 250], [300,600]],
-        adNetwork: '19968336',
-        bids: [{
-          bidder: 'appnexus',
-          params: {
-             placementId: '10433394'
+        adNetwork: '1045205',
+        bids: [
+          {
+            bidder: 'aol',
+            params: {
+              placement: '4601503',
+              network: '11111.1'
+            }
+          },
+          {
+            bidder: 'criteo',
+            params: {
+              zoneId: '797450'
+            }
+          },
+          {
+            bidder: 'appnexus',
+            params: {
+              placementId: '10433394'
+            }
           }
-        }]
+        ]
       }),
       React.createElement(DFPPrebidContainer, {
-        domID: 'div-gpt-ad-1460505661639-0',
-        slot: 'header-bid-tag1',
+        domID: 'Bloco_Diarios_View_Toppage_elm0',
+        slot: 'Bloco_Diarios_View_Toppage',
         dimensions: [[728, 90], [970, 90]],
-        adNetwork: '19968336',
+        adNetwork: '1045205',
         bids: [{
           bidder: 'appnexus',
           params: {
