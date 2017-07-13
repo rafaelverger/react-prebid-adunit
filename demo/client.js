@@ -1,4 +1,6 @@
-import { DFPPrebidContainer } from '../src';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { DFPPrebidContainer } from '../lib';
 
 ReactDOM.render(
   React.createElement('div', {

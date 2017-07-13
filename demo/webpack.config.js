@@ -7,8 +7,6 @@ const distFolder = path.resolve(__dirname, './dist/');
 const serverPort = parseInt(process.env.PORT, 10) || 3000;
 const host = process.env.WEBPACK_SERVER_HOST || '0.0.0.0';
 
-// const cdnUrl = '//az.jusbr.com/folios/';
-
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -34,12 +32,6 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.scss'],
-  },
-
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'prop-types': 'PropTypes',
   },
 
   plugins: [
