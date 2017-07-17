@@ -26,10 +26,7 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
   adServerInit(window) {
     if (!window.googletag) {
-      window.googletag = { __slots: [], cmd: [], };
-      window.googletag.cmd.push(() => {
-        googletag.pubads().disableInitialLoad();
-      });
+      window.googletag = { cmd: [() => window.googletag.pubads().disableInitialLoad()] };
     }
   }
 
@@ -41,15 +38,16 @@ export default class DFPPrebidContainer extends PrebidContainer {
     return '//www.googletagservices.com/tag/js/gpt.js';
   }
 
-  adServerRequest(window) {
-    window.googletag.cmd.push(() => {
-      window.pbjs.setTargetingForGPTAsync();
-      window.googletag.pubads().refresh();
+  adServerRequest({ googletag }) {
+    googletag.cmd.push(() => {
+      this.afterAdServerRequest();
+      setTimeout(() => {
+        googletag.pubads().refresh();
+      }, 1);
     });
   }
 
-  adServerSlot(window, isTheLastSpot, lastSpotCallback) {
-    const { pbjs, googletag } = window;
+  adServerSlot({ googletag }, isTheLastSpot, lastSpotCallback) {
     const { adNetwork, slot, dimensions, targeting, domID } = this.props;
     const adunitPath = `/${adNetwork}/${slot}`;
 
@@ -74,7 +72,7 @@ export default class DFPPrebidContainer extends PrebidContainer {
       // #googletag.Service_addEventListener
       pubadsService.addEventListener('slotRenderEnded', this.slotRendered);
       if (isTheLastSpot) {
-        googletag.pubads().enableSingleRequest();
+        pubadsService.enableSingleRequest();
         googletag.enableServices();
         lastSpotCallback();
       }

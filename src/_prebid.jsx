@@ -18,6 +18,7 @@ const propTypes = {
 
 const defaultProps = {
   skipIf: () => false,
+  bids: [],
 };
 
 
@@ -27,7 +28,7 @@ export default class PrebidContainer extends Component {
 
   constructor(props) {
     super(props);
-    this.defineSlot = ::this.defineSlot;
+    this.requestBids = ::this.requestBids;
     this.sendAdserverRequest = ::this.sendAdserverRequest;
   }
 
@@ -74,26 +75,30 @@ export default class PrebidContainer extends Component {
     this.adServerRequest(window);
   }
 
-  defineSlot(window) {
-    const { pbjs } = window;
-    const { dimensions, bids, domID } = this.props;
-    if (window.pbjs__slots.indexOf(domID) > -1) return;
+  afterAdServerRequest() {
+    window.pbjs.setTargetingForGPTAsync();
+  }
 
-    // window.pbjs__slots is used to assert that slots are loaded one time only
-    window.pbjs__slots.push(domID);
+  requestBids() {
+    window.pbjs.requestBids({ bidsBackHandler: this.sendAdserverRequest })
+  }
+
+  defineSlot(window) {
+    const { pbjs, pbjs__slots } = window;
+    const { dimensions, bids, domID } = this.props;
+    if (pbjs__slots.indexOf(domID) > -1) return;
+
+    // pbjs__slots is used to assert that slots are loaded one time only
+    pbjs__slots.push(domID);
     const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
-    const isTheLastSpot = allSpotsOnPage.length == window.pbjs__slots.length;
+    const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
 
     // prebid addUnit
     pbjs.que.push(() => {
       pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
     });
 
-    this.adServerSlot(
-      window,
-      isTheLastSpot,
-      () => pbjs.requestBids({ bidsBackHandler: this.sendAdserverRequest })
-    );
+    this.adServerSlot(window, isTheLastSpot, this.requestBids);
   }
 
   render() {
