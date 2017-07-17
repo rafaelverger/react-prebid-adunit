@@ -33,16 +33,10 @@ ReactDOM.render(
         ]
       }),
       React.createElement(DFPPrebidContainer, {
-        domID: 'Bloco_Diarios_View_Toppage_elm0',
-        slot: 'Bloco_Diarios_View_Toppage',
-        dimensions: [[728, 90], [970, 90]],
-        adNetwork: '1045205',
-        bids: [{
-          bidder: 'appnexus',
-          params: {
-             placementId: '10433394'
-          }
-        }]
+        domID: 'Bloco_Diarios_View_Docside_elm1',
+        slot: 'Bloco_Diarios_View_Docside',
+        dimensions: [[300,600]],
+        adNetwork: '1045205'
       })
     ]
   }),
