@@ -1,6 +1,6 @@
 {
   "name": "react-prebid-adunit-demo",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Demo Application to use DFPPrebidAd element",
   "main": "demo/server.js",
   "scripts": {
