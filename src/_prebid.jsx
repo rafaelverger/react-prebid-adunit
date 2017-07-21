@@ -106,7 +106,7 @@ export default class PrebidContainer extends Component {
     return (
       <div
         id={domID}
-        className={`adspot ${className}`}
+        className={`adspot ${className || ''}`.trim()}
         data-prebid-adspot={this.adServerType()}
       />
     );
