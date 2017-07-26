@@ -10,6 +10,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Docside',
         dimensions: [[300, 250], [300,600]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -25,15 +26,18 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797450'
-            }
-          },
-          {
             bidder: 'appnexus',
             params: {
               placementId: '10433394'
+            }
+          },
+          {
+            bidder: 'rubicon',
+            params: {
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'atf' }
             }
           }
         ]
@@ -43,6 +47,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Toppage',
         dimensions: [[728,90],[970,90], [970,250]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -58,11 +63,14 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
+            bidder: 'rubicon',
             params: {
-              zoneId: '797462'
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'atf' }
             }
-          },
+          }
         ]
       }),
       React.createElement(DFPPrebidContainer, {
@@ -70,6 +78,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Innerpage',
         dimensions: [[728,90],[970,90], [970,250]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -85,11 +94,14 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
+            bidder: 'rubicon',
             params: {
-              zoneId: '797463'
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'btf' }
             }
-          },
+          }
         ]
       }),
       React.createElement(DFPPrebidContainer, {
@@ -97,6 +109,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Bottompage',
         dimensions: [[728,90],[970,90], [970,250]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -112,11 +125,14 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
+            bidder: 'rubicon',
             params: {
-              zoneId: '797464'
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'btf' }
             }
-          },
+          }
         ]
       }),
       React.createElement(DFPPrebidContainer, {
@@ -124,6 +140,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Toppage_Mobile',
         dimensions: [[320,50], [320,100], [300,50], [300,100]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -145,11 +162,14 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
+            bidder: 'rubicon',
             params: {
-              zoneId: '797460'
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'btf' }
             }
-          },
+          }
         ]
       }),
       React.createElement(DFPPrebidContainer, {
@@ -157,6 +177,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Innerpage_Mobile',
         dimensions: [[300,250]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -171,6 +192,15 @@ ReactDOM.render(
               zoneId: '797451'
             }
           },
+          {
+            bidder: 'rubicon',
+            params: {
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'btf' }
+            }
+          }
         ]
       }),
       React.createElement(DFPPrebidContainer, {
@@ -178,6 +208,7 @@ ReactDOM.render(
         slot: 'Diarios_View_Bottompage_Mobile',
         dimensions: [[300,250]],
         adNetwork: '1045205',
+        targeting: {env: 'dev'},
         bids: [
           {
             bidder: 'aol',
@@ -192,6 +223,15 @@ ReactDOM.render(
               zoneId: '797452'
             }
           },
+          {
+            bidder: 'rubicon',
+            params: {
+               accountId: '16810',
+               siteId: '147452',
+               zoneId: '696128',
+               inventory: { position: 'btf' }
+            }
+          }
         ]
       })
     ]
