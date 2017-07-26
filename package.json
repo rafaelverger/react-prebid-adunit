@@ -1,6 +1,6 @@
 {
   "name": "react-prebid-adunit",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "React Component to wrap AdUnit elements using a Prebid.js container",
   "main": "lib/index.js",
   "scripts": {
@@ -8,12 +8,31 @@
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaelverger/react-prebid-adunit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafaelverger/react-prebid-adunit/issues"
+  },
+  "keywords": [
+    "ads",
+    "prebid",
+    "advertise",
+    "advertisement",
+    "header-bidding",
+    "dfp",
+    "googleads",
+    "double-click",
+    "react",
+    "react-components"
+  ],
   "author": "rafaelverger",
   "license": "MIT",
   "dependencies": {
     "nautilusjs": "0.0.6",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1"
+    "prop-types": "15.5.10",
+    "react": "15.6.1"
   },
   "peerDependencies": {
     "prop-types": ">=15.0.0",

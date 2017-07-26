@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nautilus } from 'nautilusjs';
 
-const PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/prebid.js';
+const PREBID_URL = '//az.jusbr.com/libs/prebid/prebid-0.26.1-aol-appnexus-criteo-rubicon.js';
 const ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
