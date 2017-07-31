@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { nautilus } from 'nautilusjs';
 
 const PREBID_URL = '//az.jusbr.com/libs/prebid/prebid-0.26.1-aol-appnexus-criteo-rubicon.js';
-const ADSERVER_TIMEOUT = 1000;
+const DEFAULT_ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
   domID: PropTypes.string.isRequired,
@@ -14,11 +14,13 @@ const propTypes = {
   dimensions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   className: PropTypes.string,
   skipIf: PropTypes.func,
+  adserverTimeout: PropTypes.number,
 };
 
 const defaultProps = {
   skipIf: () => false,
   bids: [],
+  adserverTimeout: DEFAULT_ADSERVER_TIMEOUT,
 };
 
 
@@ -44,7 +46,7 @@ export default class PrebidContainer extends Component {
       window.pbjsAdServerTimeout = setTimeout(() => {
         console.log('[prebid] global timeout');
         this.sendAdserverRequest();
-      }, ADSERVER_TIMEOUT);
+      }, this.props.adserverTimeout);
       nautilus([PREBID_URL], [this.adServerURL()]);
     }
 
