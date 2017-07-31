@@ -41,7 +41,10 @@ export default class PrebidContainer extends Component {
     if (!window.pbjs) {
       window.pbjs = { que: [] };
       window.pbjs__slots = [];
-      window.pbjsAdServerTimeout = setTimeout(this.sendAdserverRequest, ADSERVER_TIMEOUT);
+      window.pbjsAdServerTimeout = setTimeout(() => {
+        console.log('[prebid] global timeout');
+        this.sendAdserverRequest();
+      }, ADSERVER_TIMEOUT);
       nautilus([PREBID_URL], [this.adServerURL()]);
     }
 
@@ -86,19 +89,20 @@ export default class PrebidContainer extends Component {
   defineSlot(window) {
     const { pbjs, pbjs__slots } = window;
     const { dimensions, bids, domID } = this.props;
-    if (pbjs__slots.indexOf(domID) > -1) return;
-
-    // pbjs__slots is used to assert that slots are loaded one time only
-    pbjs__slots.push(domID);
-    const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
-    const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
 
     // prebid addUnit
     pbjs.que.push(() => {
-      pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
-    });
+      if (pbjs__slots.indexOf(domID) > -1) return;
 
-    this.adServerSlot(window, isTheLastSpot, this.requestBids);
+      // pbjs__slots is used to assert that slots are loaded one time only
+      pbjs__slots.push(domID);
+      const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
+      const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
+
+      pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
+
+      this.adServerSlot(window, isTheLastSpot, this.requestBids);
+    });
   }
 
   render() {
