@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DFPPrebidContainer } from '../lib';
+import { DFPPrebidContainer } from 'react-prebid-adunit';
 
 ReactDOM.render(
   React.createElement('div', {

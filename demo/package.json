@@ -16,8 +16,9 @@
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-hot-loader": "3.0.0-beta.7",
+    "react-prebid-adunit": "../",
     "webpack": "3.2.0",
-    "webpack-dev-middleware": "1.11.0",
-    "webpack-hot-middleware": "2.18.1"
-  }
+    "webpack-dev-middleware": "1.11.0"
+  },
+  "dependencies": {}
 }
