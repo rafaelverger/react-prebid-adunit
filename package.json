@@ -1,6 +1,6 @@
 {
   "name": "react-prebid-adunit",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "React Component to wrap AdUnit elements using a Prebid.js container",
   "main": "lib/index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "prop-types": "15.5.10"
   },
   "peerDependencies": {
-    "react": "15.x.y"
+    "react": "15.x.x"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
