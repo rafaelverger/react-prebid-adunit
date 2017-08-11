@@ -16,6 +16,14 @@ const propTypes = {
   skipIf: PropTypes.func,
   adserverTimeout: PropTypes.number,
   prebidLibURL: PropTypes.string,
+  config: PropTypes.shape({
+    pricing: PropTypes.arrayOf(PropTypes.shape({
+      min: PropTypes.number,
+      max: PropTypes.number,
+      increment: PropTypes.number,
+      precision: PropTypes.number,
+    })),
+  }),
 };
 
 const defaultProps = {
@@ -23,6 +31,7 @@ const defaultProps = {
   bids: [],
   adserverTimeout: DEFAULT_ADSERVER_TIMEOUT,
   prebidLibURL: DEFAULT_PREBID_URL,
+  config: {},
 };
 
 
@@ -32,8 +41,16 @@ export default class PrebidContainer extends Component {
 
   constructor(props) {
     super(props);
+    this.configure = ::this.configure;
     this.requestBids = ::this.requestBids;
     this.sendAdserverRequest = ::this.sendAdserverRequest;
+  }
+
+  configure() {
+    const { config } = this.props;
+    if (config.pricing) {
+      pbjs.setPriceGranularity(config.pricing);
+    }
   }
 
   componentDidMount() {
@@ -43,7 +60,7 @@ export default class PrebidContainer extends Component {
     this.adServerInit(window);
 
     if (!window.pbjs) {
-      window.pbjs = { que: [] };
+      window.pbjs = { que: [this.configure] };
       window.pbjs__slots = [];
       window.pbjsAdServerTimeout = setTimeout(() => {
         console.log('[prebid] global timeout');
