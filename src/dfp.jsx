@@ -81,11 +81,17 @@ export default class DFPPrebidContainer extends PrebidContainer {
 
   slotRendered(event) {
     const { flexible, domID } = this.props;
+    const adFrame = document.getElementById(domID).querySelector('iframe');
+    let size = event.size || [];
     if (event.slot.getSlotId().getDomId() !== domID) return;
 
-    this.props.afterAdLoaded(!event.isEmpty, event.size);
+    if (size.join('x') === '1x1') {
+      // size 1x1 means creatives with capability to ensure multiple sizes
+      size = [adFrame.width, adFrame.height];
+    }
+
+    this.props.afterAdLoaded(!event.isEmpty, size);
     if (flexible && !event.isEmpty) {
-      const adFrame = adspot.querySelector('iframe');
       const { parentNode: container, contentDocument: adDocument } = adFrame;
       container.style.width = '100%';
       container.style.height = 'auto';
