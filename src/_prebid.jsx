@@ -49,7 +49,7 @@ export default class PrebidContainer extends Component {
   configure() {
     const { config } = this.props;
     if (config.pricing) {
-      pbjs.setPriceGranularity(config.pricing);
+      pbjs.setPriceGranularity({ buckets: config.pricing });
     }
   }
 
