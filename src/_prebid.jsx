@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nautilus } from 'nautilusjs';
 
-const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/prebid.js';
+const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js';
 const DEFAULT_ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
@@ -47,10 +47,16 @@ export default class PrebidContainer extends Component {
   }
 
   configure() {
-    const { config } = this.props;
+    const { config, adserverTimeout } = this.props;
+
+    const pbjsConfig = {
+      bidderTimeout: adserverTimeout,
+      debug: process.env.NODE_ENV === 'development',
+    };
     if (config.pricing) {
-      pbjs.setPriceGranularity({ buckets: config.pricing });
+      pbjsConfig['priceGranularity'] = { buckets: config.pricing };
     }
+    pbjs.setConfig(pbjsConfig)
   }
 
   componentDidMount() {
@@ -62,10 +68,6 @@ export default class PrebidContainer extends Component {
     if (!window.pbjs) {
       window.pbjs = { que: [this.configure] };
       window.pbjs__slots = [];
-      window.pbjsAdServerTimeout = setTimeout(() => {
-        console.log('[prebid] global timeout');
-        this.sendAdserverRequest();
-      }, this.props.adserverTimeout);
       nautilus([prebidLibURL], [this.adServerURL()]);
     }
 
@@ -120,7 +122,11 @@ export default class PrebidContainer extends Component {
       const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
       const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
 
-      pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
+      pbjs.addAdUnits([{
+        code: domID,
+        mediaTypes: { banner: { sizes: dimensions } },
+        bids,
+      }])
 
       this.adServerSlot(window, isTheLastSpot, this.requestBids);
     });
