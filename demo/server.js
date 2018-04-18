@@ -29,7 +29,7 @@ const BUNDLEJS_PATH = `${webpackConfig.output.publicPath}${webpackConfig.output.
 
 app.use(wpMiddleware);
 
-nunjucks.configure('./', {
+nunjucks.configure(__dirname, {
   express: app,
   autoescape: true,
   watch: true,
