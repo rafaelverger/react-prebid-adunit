@@ -14,24 +14,39 @@ const propTypes = {
   dimensions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   className: PropTypes.string,
   skipIf: PropTypes.func,
-  adserverTimeout: PropTypes.number,
   prebidLibURL: PropTypes.string,
-  config: PropTypes.shape({
-    pricing: PropTypes.arrayOf(PropTypes.shape({
-      min: PropTypes.number,
-      max: PropTypes.number,
-      increment: PropTypes.number,
-      precision: PropTypes.number,
-    })),
+
+  // pbjs setConfig props
+  bidderTimeout: PropTypes.number,
+  currency: PropTypes.shape({
+    adServerCurrency: PropTypes.string,
+    granularityMultiplier: PropTypes.number,
+    conversionRateFile: PropTypes.string,
+    rates: PropTypes.object,
+    bidderCurrencyDefault: PropTypes.object,
   }),
+  debug: PropTypes.bool,
+  priceGranularity: PropTypes.oneOfType([
+    PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+    PropTypes.shape({
+      buckets: PropTypes.arrayOf(PropTypes.shape({
+        min: PropTypes.number,
+        max: PropTypes.number,
+        increment: PropTypes.number,
+        precision: PropTypes.number,
+      })),
+    }),
+  ]),
 };
 
 const defaultProps = {
   skipIf: () => false,
   bids: [],
-  adserverTimeout: DEFAULT_ADSERVER_TIMEOUT,
   prebidLibURL: DEFAULT_PREBID_URL,
-  config: {},
+
+  // pbjs setConfig props
+  bidderTimeout: DEFAULT_ADSERVER_TIMEOUT,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 
@@ -47,16 +62,8 @@ export default class PrebidContainer extends Component {
   }
 
   configure() {
-    const { config, adserverTimeout } = this.props;
-
-    const pbjsConfig = {
-      bidderTimeout: adserverTimeout,
-      debug: process.env.NODE_ENV === 'development',
-    };
-    if (config.pricing) {
-      pbjsConfig.priceGranularity = { buckets: config.pricing };
-    }
-    pbjs.setConfig(pbjsConfig)
+    const { bidderTimeout, currency, debug, priceGranularity } = this.props;
+    pbjs.setConfig({ bidderTimeout, currency, debug, priceGranularity })
   }
 
   componentDidMount() {
