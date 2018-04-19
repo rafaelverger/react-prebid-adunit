@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DFPPrebidContainer } from 'react-prebid-adunit';
+import { DFPPrebidContainer } from '../src';
 
 ReactDOM.render(
   React.createElement('div', {
@@ -17,12 +17,6 @@ ReactDOM.render(
             params: {
               placement: '4601506',
               network: '11111.1'
-            }
-          },
-          {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797453'
             }
           },
           {
@@ -57,12 +51,6 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797446'
-            }
-          },
-          {
             bidder: 'rubicon',
             params: {
                accountId: '16810',
@@ -85,12 +73,6 @@ ReactDOM.render(
             params: {
               placement: '4601508',
               network: '11111.1'
-            }
-          },
-          {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797447'
             }
           },
           {
@@ -119,12 +101,6 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797448'
-            }
-          },
-          {
             bidder: 'rubicon',
             params: {
                accountId: '16810',
@@ -147,18 +123,6 @@ ReactDOM.render(
             params: {
               placement: '4601511',
               network: '11111.1'
-            }
-          },
-          {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797456'
-            }
-          },
-          {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797458'
             }
           },
           {
@@ -187,12 +151,6 @@ ReactDOM.render(
             }
           },
           {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797451'
-            }
-          },
-          {
             bidder: 'rubicon',
             params: {
                accountId: '16810',
@@ -215,12 +173,6 @@ ReactDOM.render(
             params: {
               placement: '4601510',
               network: '11111.1'
-            }
-          },
-          {
-            bidder: 'criteo',
-            params: {
-              zoneId: '797452'
             }
           },
           {

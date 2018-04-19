@@ -15,7 +15,7 @@
   "env": {
     "demo": {
       "plugins": [
-        "./demo/node_modules/react-hot-loader/babel"
+        "react-hot-loader/babel"
       ]
     }
   }

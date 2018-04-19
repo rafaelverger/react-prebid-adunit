@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nautilus } from 'nautilusjs';
+import isUndefined from 'lodash.isundefined';
+import omitBy from 'lodash.omitby';
 
-const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/prebid.js';
+const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js';
 const DEFAULT_ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
@@ -14,24 +16,39 @@ const propTypes = {
   dimensions: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   className: PropTypes.string,
   skipIf: PropTypes.func,
-  adserverTimeout: PropTypes.number,
   prebidLibURL: PropTypes.string,
-  config: PropTypes.shape({
-    pricing: PropTypes.arrayOf(PropTypes.shape({
-      min: PropTypes.number,
-      max: PropTypes.number,
-      increment: PropTypes.number,
-      precision: PropTypes.number,
-    })),
+
+  // pbjs setConfig props
+  bidderTimeout: PropTypes.number,
+  currency: PropTypes.shape({
+    adServerCurrency: PropTypes.string,
+    granularityMultiplier: PropTypes.number,
+    conversionRateFile: PropTypes.string,
+    rates: PropTypes.object,
+    bidderCurrencyDefault: PropTypes.object,
   }),
+  debug: PropTypes.bool,
+  priceGranularity: PropTypes.oneOfType([
+    PropTypes.oneOf(['low', 'medium', 'high', 'auto', 'dense']),
+    PropTypes.shape({
+      buckets: PropTypes.arrayOf(PropTypes.shape({
+        min: PropTypes.number,
+        max: PropTypes.number,
+        increment: PropTypes.number,
+        precision: PropTypes.number,
+      })),
+    }),
+  ]),
 };
 
 const defaultProps = {
   skipIf: () => false,
   bids: [],
-  adserverTimeout: DEFAULT_ADSERVER_TIMEOUT,
   prebidLibURL: DEFAULT_PREBID_URL,
-  config: {},
+
+  // pbjs setConfig props
+  bidderTimeout: DEFAULT_ADSERVER_TIMEOUT,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 
@@ -47,10 +64,14 @@ export default class PrebidContainer extends Component {
   }
 
   configure() {
-    const { config } = this.props;
-    if (config.pricing) {
-      pbjs.setPriceGranularity({ buckets: config.pricing });
-    }
+    const { bidderTimeout, currency, debug, priceGranularity } = this.props;
+    const pbjsConfig = omitBy({
+      bidderTimeout,
+      currency,
+      debug,
+      priceGranularity,
+    }, isUndefined);
+    pbjs.setConfig(pbjsConfig);
   }
 
   componentDidMount() {
@@ -62,10 +83,6 @@ export default class PrebidContainer extends Component {
     if (!window.pbjs) {
       window.pbjs = { que: [this.configure] };
       window.pbjs__slots = [];
-      window.pbjsAdServerTimeout = setTimeout(() => {
-        console.log('[prebid] global timeout');
-        this.sendAdserverRequest();
-      }, this.props.adserverTimeout);
       nautilus([prebidLibURL], [this.adServerURL()]);
     }
 
@@ -120,7 +137,11 @@ export default class PrebidContainer extends Component {
       const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
       const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
 
-      pbjs.addAdUnits([{ code: domID, sizes: dimensions, bids }])
+      pbjs.addAdUnits([{
+        code: domID,
+        mediaTypes: { banner: { sizes: dimensions } },
+        bids,
+      }])
 
       this.adServerSlot(window, isTheLastSpot, this.requestBids);
     });

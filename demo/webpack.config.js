@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const entry = path.resolve(__dirname, './client.js');
 const distFolder = path.resolve(__dirname, './dist/');
 const serverPort = parseInt(process.env.PORT, 10) || 3000;
 const host = process.env.WEBPACK_SERVER_HOST || '0.0.0.0';
@@ -22,9 +23,7 @@ const reactDOMExternal = {
 
 module.exports = {
   devtool: 'source-map',
-  entry: [
-    './client',
-  ],
+  entry,
 
   // externals: {
   //   'react': reactExternal,
