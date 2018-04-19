@@ -54,7 +54,7 @@ export default class PrebidContainer extends Component {
       debug: process.env.NODE_ENV === 'development',
     };
     if (config.pricing) {
-      pbjsConfig['priceGranularity'] = { buckets: config.pricing };
+      pbjsConfig.priceGranularity = { buckets: config.pricing };
     }
     pbjs.setConfig(pbjsConfig)
   }
