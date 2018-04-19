@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nautilus } from 'nautilusjs';
+import isUndefined from 'lodash.isundefined';
+import omitBy from 'lodash.omitby';
 
 const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js';
 const DEFAULT_ADSERVER_TIMEOUT = 1000;
@@ -63,13 +65,12 @@ export default class PrebidContainer extends Component {
 
   configure() {
     const { bidderTimeout, currency, debug, priceGranularity } = this.props;
-    // The pbjs.setConfig param object must be JSON
-    const pbjsConfig = JSON.parse(JSON.stringify({
+    const pbjsConfig = omitBy({
       bidderTimeout,
       currency,
       debug,
       priceGranularity,
-    }));
+    }, isUndefined);
     pbjs.setConfig(pbjsConfig);
   }
 
