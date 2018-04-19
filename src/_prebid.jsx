@@ -63,7 +63,14 @@ export default class PrebidContainer extends Component {
 
   configure() {
     const { bidderTimeout, currency, debug, priceGranularity } = this.props;
-    pbjs.setConfig({ bidderTimeout, currency, debug, priceGranularity })
+    // The pbjs.setConfig param object must be JSON
+    const pbjsConfig = JSON.parse(JSON.stringify({
+      bidderTimeout,
+      currency,
+      debug,
+      priceGranularity,
+    }));
+    pbjs.setConfig(pbjsConfig);
   }
 
   componentDidMount() {
