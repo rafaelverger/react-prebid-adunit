@@ -24,7 +24,7 @@ export default class DFPPrebidContainer extends PrebidContainer {
     this.slotRendered = ::this.slotRendered;
   }
 
-  adServerInit(window) {
+  adServerInit() {
     if (!window.googletag) {
       window.googletag = { cmd: [() => window.googletag.pubads().disableInitialLoad()] };
     }
@@ -35,19 +35,20 @@ export default class DFPPrebidContainer extends PrebidContainer {
   }
 
   adServerURL() {
-    return '//www.googletagservices.com/tag/js/gpt.js';
+    return 'https://www.googletagservices.com/tag/js/gpt.js';
   }
 
-  adServerRequest({ googletag }) {
+  adServerRequest() {
+    const { googletag } = window;
     googletag.cmd.push(() => {
-      this.afterAdServerRequest();
-      setTimeout(() => {
+      this.afterAdServerRequest().then(() => {
         googletag.pubads().refresh();
-      }, 1);
+      });
     });
   }
 
-  adServerSlot({ googletag }, isTheLastSpot, lastSpotCallback) {
+  adServerSlot(isTheLastSpot, lastSpotCallback) {
+    const { googletag } = window;
     const { adNetwork, slot, dimensions, targeting, domID } = this.props;
     const adunitPath = `/${adNetwork}/${slot}`;
 
