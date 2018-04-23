@@ -4,7 +4,7 @@ import { nautilus } from 'nautilusjs';
 import isUndefined from 'lodash.isundefined';
 import omitBy from 'lodash.omitby';
 
-const DEFAULT_PREBID_URL = '//acdn.adnxs.com/prebid/not-for-prod/1/prebid.js';
+const DEFAULT_PREBID_URL = 'https://acdn.adnxs.com/prebid/not-for-prod/1/prebid.js';
 const DEFAULT_ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
@@ -78,18 +78,18 @@ export default class PrebidContainer extends Component {
     const { skipIf, prebidLibURL } = this.props;
     if (skipIf()) return;
 
-    this.adServerInit(window);
+    this.adServerInit();
 
     if (!window.pbjs) {
       window.pbjs = { que: [this.configure] };
       window.pbjs__slots = [];
-      nautilus([prebidLibURL], [this.adServerURL()]);
+      nautilus([prebidLibURL, this.adServerURL()]);
     }
 
-    this.defineSlot(window);
+    this.defineSlot();
   }
 
-  adServerInit(window) {
+  adServerInit() {
     throw new Error('AdServer initiation is not implemented');
   }
 
@@ -101,30 +101,39 @@ export default class PrebidContainer extends Component {
     throw new Error('AdServer URL is not implemented');
   }
 
-  adServerRequest(window) {
+  adServerRequest() {
     throw new Error('AdServer request is not implemented');
   }
 
-  adServerSlot(window, isTheLastSpot) {
+  adServerSlot() {
     throw new Error('AdServer slot is not implemented');
   }
 
   sendAdserverRequest() {
-    if (window.pbjs.adserverRequestSent) return;
-    clearTimeout(window.pbjsAdServerTimeout);
-    window.pbjs.adserverRequestSent = true;
-    this.adServerRequest(window);
+    const { pbjs } = window;
+    if (pbjs.adserverRequestSent) return;
+    pbjs.adserverRequestSent = true;
+    this.adServerRequest();
   }
 
   afterAdServerRequest() {
-    window.pbjs.setTargetingForGPTAsync();
+    const { pbjs } = window;
+    return new Promise((resolve) => {
+      pbjs.que.push(() => {
+        pbjs.setTargetingForGPTAsync();
+        resolve();
+      });
+    });
   }
 
   requestBids() {
-    window.pbjs.requestBids({ bidsBackHandler: this.sendAdserverRequest })
+    const { pbjs } = window;
+    pbjs.que.push(() => {
+      pbjs.requestBids({ bidsBackHandler: this.sendAdserverRequest });
+    });
   }
 
-  defineSlot(window) {
+  defineSlot() {
     const { pbjs, pbjs__slots } = window;
     const { dimensions, bids, domID } = this.props;
 
@@ -135,7 +144,7 @@ export default class PrebidContainer extends Component {
       // pbjs__slots is used to assert that slots are loaded one time only
       pbjs__slots.push(domID);
       const allSpotsOnPage = document.querySelectorAll(`[data-prebid-adspot=${this.adServerType()}]`);
-      const isTheLastSpot = allSpotsOnPage.length == pbjs__slots.length;
+      const isTheLastSpot = allSpotsOnPage.length === pbjs__slots.length;
 
       pbjs.addAdUnits([{
         code: domID,
@@ -143,7 +152,7 @@ export default class PrebidContainer extends Component {
         bids,
       }])
 
-      this.adServerSlot(window, isTheLastSpot, this.requestBids);
+      this.adServerSlot(isTheLastSpot, this.requestBids);
     });
   }
 
