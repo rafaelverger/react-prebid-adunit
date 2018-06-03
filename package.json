@@ -31,10 +31,10 @@
   "author": "rafaelverger",
   "license": "MIT",
   "dependencies": {
-    "lodash.isundefined": "3.0.1",
-    "lodash.omitby": "4.6.0",
-    "nautilusjs": "1.0.0",
-    "prop-types": "15.5.10"
+    "lodash.isundefined": "^3.0.1",
+    "lodash.omitby": "^4.6.0",
+    "nautilusjs": "^1.0.0",
+    "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": "15.x.x"
