@@ -1,5 +1,2 @@
-.babelrc
-.npmignore
-demo/
-src/
-webpack/
+*
+!/lib/**/*
