@@ -1,6 +1,6 @@
 {
   "name": "react-prebid-adunit",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "React Component to wrap AdUnit elements using a Prebid.js container",
   "main": "lib/index.js",
   "scripts": {
