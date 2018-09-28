@@ -17,6 +17,7 @@ const propTypes = {
   className: PropTypes.string,
   skipIf: PropTypes.func,
   prebidLibURL: PropTypes.string,
+  bidderAliases: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
 
   // pbjs setConfig props
   bidderTimeout: PropTypes.number,
@@ -45,6 +46,7 @@ const defaultProps = {
   skipIf: () => false,
   bids: [],
   prebidLibURL: DEFAULT_PREBID_URL,
+  bidderAliases: [],
 
   // pbjs setConfig props
   bidderTimeout: DEFAULT_ADSERVER_TIMEOUT,
@@ -64,7 +66,10 @@ export default class PrebidContainer extends Component {
   }
 
   configure() {
-    const { bidderTimeout, currency, debug, priceGranularity } = this.props;
+    const { bidderAliases, bidderTimeout, currency, debug, priceGranularity } = this.props;
+    bidderAliases.forEach(([adapterName, aliasedName]) => {
+      pbjs.aliasBidder(adapterName, aliasedName);
+    });
     const pbjsConfig = omitBy({
       bidderTimeout,
       currency,
