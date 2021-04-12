@@ -8,6 +8,7 @@ const DEFAULT_PREBID_URL = 'https://acdn.adnxs.com/prebid/not-for-prod/1/prebid.
 const DEFAULT_ADSERVER_TIMEOUT = 1000;
 
 const propTypes = {
+  'data-testid': PropTypes.string,
   domID: PropTypes.string.isRequired,
   bids: PropTypes.arrayOf(PropTypes.shape({
     bidder: PropTypes.string.isRequired,
@@ -162,12 +163,13 @@ export default class PrebidContainer extends Component {
   }
 
   render() {
-    const { className, domID } = this.props;
+    const { className, domID, 'data-testid': dataTestId } = this.props;
     return (
       <div
         id={domID}
         className={`adspot ${className || ''}`.trim()}
         data-prebid-adspot={this.adServerType()}
+        data-testid={dataTestId}
       />
     );
   }
