@@ -1,16 +1,15 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": ["last 2 versions", "ie >= 9"]
       }
     }],
-    "react"
+    "@babel/preset-react",
+    "minify"
   ],
   "plugins": [
-    "add-module-exports",
-    "transform-function-bind",
-    "transform-object-rest-spread"
+    "@babel/plugin-proposal-function-bind"
   ],
   "env": {
     "demo": {

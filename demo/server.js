@@ -12,14 +12,14 @@ const server = http.createServer(app);
 const compiler = webpack(webpackConfig);
 const wpMiddleware = webpackMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath,
-  noInfo: true,
-  quiet: false,
-  lazy: false,
-  watchOptions: {
-    aggregateTimeout: 300,
-    poll: true,
-    ignored: /node_modules/,
-  },
+  // noInfo: true,
+  // quiet: false,
+  // lazy: false,
+  // watchOptions: {
+  //   aggregateTimeout: 300,
+  //   poll: true,
+  //   ignored: /node_modules/,
+  // },
   stats: {
     colors: true,
   },

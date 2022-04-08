@@ -8,27 +8,9 @@ const distFolder = path.resolve(__dirname, './dist/');
 const serverPort = parseInt(process.env.PORT, 10) || 3000;
 const host = process.env.WEBPACK_SERVER_HOST || '0.0.0.0';
 
-const reactExternal = {
-  root: 'React',
-  commonjs2: 'react',
-  commonjs: 'react',
-  amd: 'react'
-};
-const reactDOMExternal = {
-  root: 'ReactDOM',
-  commonjs2: 'react-dom',
-  commonjs: 'react-dom',
-  amd: 'react-dom'
-};
-
 module.exports = {
   devtool: 'source-map',
   entry,
-
-  // externals: {
-  //   'react': reactExternal,
-  //   'react-dom': reactDOMExternal,
-  // },
 
   output: {
     filename: 'bundle.js',
@@ -37,11 +19,13 @@ module.exports = {
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: ['babel-loader'],
         exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        }
       }
     ],
   },
